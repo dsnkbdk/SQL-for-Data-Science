@@ -1,0 +1,746 @@
+Data Scientist Project: Profiling and Analyzing the Yelp Dataset
+
+
+Part 1: Yelp Dataset Profiling and Understanding
+
+1. Profile the data by finding the total number of records for each of the tables below:
+	
+i. Attribute table = 10000
+ii. Business table = 10000
+iii. Category table = 10000
+iv. Checkin table = 10000
+v. elite_years table = 10000
+vi. friend table = 10000
+vii. hours table = 10000
+viii. photo table = 10000
+ix. review table = 10000
+x. tip table = 10000
+xi. user table = 10000
+
+select count(*) from attribute
++----------+
+| count(*) |
++----------+
+|    10000 |
++----------+
+
+select count(*) from business
++----------+
+| count(*) |
++----------+
+|    10000 |
++----------+
+
+select count(*) from category
++----------+
+| count(*) |
++----------+
+|    10000 |
++----------+
+
+select count(*) from checkin
++----------+
+| count(*) |
++----------+
+|    10000 |
++----------+
+
+select count(*) from elite_years
++----------+
+| count(*) |
++----------+
+|    10000 |
++----------+
+
+select count(*) from friend
++----------+
+| count(*) |
++----------+
+|    10000 |
++----------+
+
+select count(*) from hours
++----------+
+| count(*) |
++----------+
+|    10000 |
++----------+
+
+select count(*) from photo
++----------+
+| count(*) |
++----------+
+|    10000 |
++----------+
+
+select count(*) from review
++----------+
+| count(*) |
++----------+
+|    10000 |
++----------+
+
+select count(*) from tip
++----------+
+| count(*) |
++----------+
+|    10000 |
++----------+
+
+select count(*) from user
++----------+
+| count(*) |
++----------+
+|    10000 |
++----------+
+
+
+2. Find the total distinct records by either the foreign key or primary key for each table.
+
+i. Business = 10000 (id)
+ii. Hours = 1562 (business_id)
+iii. Category = 2643 (business_id)
+iv. Attribute = 1115 (business_id)
+v. Review = 10000 (id), 8090 (business_id), 9581(user_id)
+vi. Checkin = 493 (business_id)
+vii. Photo = 10000 (id), 6493 (business_id)
+viii. Tip = 3979 (business_id), 537 (user_id)
+ix. User = 10000 (id)
+x. Friend = 11 (user_id)
+xi. Elite_years = 2780 (user_id)
+
+Note: Primary Keys are denoted in the ER-Diagram with a yellow key icon.	
+
+select count(distinct id) from business
++--------------------+
+| count(distinct id) |
++--------------------+
+|              10000 |
++--------------------+
+
+select count(distinct business_id) from hours
++-----------------------------+
+| count(distinct business_id) |
++-----------------------------+
+|                        1562 |
++-----------------------------+
+
+select count(distinct business_id) from category
++-----------------------------+
+| count(distinct business_id) |
++-----------------------------+
+|                        2643 |
++-----------------------------+
+
+select count(distinct business_id) from attribute
++-----------------------------+
+| count(distinct business_id) |
++-----------------------------+
+|                        1115 |
++-----------------------------+
+
+select count(distinct id), count(distinct business_id), count(distinct user_id) from review
++--------------------+-----------------------------+-------------------------+
+| count(distinct id) | count(distinct business_id) | count(distinct user_id) |
++--------------------+-----------------------------+-------------------------+
+|              10000 |                        8090 |                    9581 |
++--------------------+-----------------------------+-------------------------+
+
+select count(distinct business_id) from checkin
++-----------------------------+
+| count(distinct business_id) |
++-----------------------------+
+|                         493 |
++-----------------------------+
+
+select count(distinct id), count(distinct business_id) from photo
++--------------------+-----------------------------+
+| count(distinct id) | count(distinct business_id) |
++--------------------+-----------------------------+
+|              10000 |                        6493 |
++--------------------+-----------------------------+
+
+select count(distinct business_id), count(distinct user_id) from tip
++-----------------------------+-------------------------+
+| count(distinct business_id) | count(distinct user_id) |
++-----------------------------+-------------------------+
+|                        3979 |                     537 |
++-----------------------------+-------------------------+
+
+select count(distinct id) from user
++--------------------+
+| count(distinct id) |
++--------------------+
+|              10000 |
++--------------------+
+
+select count(distinct user_id) from friend
++-------------------------+
+| count(distinct user_id) |
++-------------------------+
+|                      11 |
++-------------------------+
+
+select count(distinct user_id) from elite_years
++-------------------------+
+| count(distinct user_id) |
++-------------------------+
+|                    2780 |
++-------------------------+
+
+
+3. Are there any columns with null values in the Users table?
+
+	Answer: no
+	
+	SQL code used to arrive at answer:
+	
+	select count(id = NULL) from user
+	+------------------+
+	| count(id = NULL) |
+	+------------------+
+	|                0 |
+	+------------------+
+
+	select count(name = NULL) from user
+	+--------------------+
+	| count(name = NULL) |
+	+--------------------+
+	|                  0 |
+	+--------------------+
+
+	select count(review_count = NULL) from user
+	+----------------------------+
+	| count(review_count = NULL) |
+	+----------------------------+
+	|                          0 |
+	+----------------------------+
+
+	select count(yelping_since = NULL) from user
+	+-----------------------------+
+	| count(yelping_since = NULL) |
+	+-----------------------------+
+	|                           0 |
+	+-----------------------------+
+
+	select count(useful = NULL) from user
+	+----------------------+
+	| count(useful = NULL) |
+	+----------------------+
+	|                    0 |
+	+----------------------+
+
+	select count(funny = NULL) from user
+	+---------------------+
+	| count(funny = NULL) |
+	+---------------------+
+	|                   0 |
+	+---------------------+
+
+	select count(cool = NULL) from user
+	+--------------------+
+	| count(cool = NULL) |
+	+--------------------+
+	|                  0 |
+	+--------------------+
+
+	select count(fans = NULL) from user
+	+--------------------+
+	| count(fans = NULL) |
+	+--------------------+
+	|                  0 |
+	+--------------------+
+
+	select count(average_stars = NULL) from user
+	+-----------------------------+
+	| count(average_stars = NULL) |
+	+-----------------------------+
+	|                           0 |
+	+-----------------------------+
+
+	select count(compliment_hot = NULL) from user
+	+------------------------------+
+	| count(compliment_hot = NULL) |
+	+------------------------------+
+	|                            0 |
+	+------------------------------+
+
+	select count(compliment_more = NULL) from user
+	+-------------------------------+
+	| count(compliment_more = NULL) |
+	+-------------------------------+
+	|                             0 |
+	+-------------------------------+
+
+	select count(compliment_profile = NULL) from user
+	+----------------------------------+
+	| count(compliment_profile = NULL) |
+	+----------------------------------+
+	|                                0 |
+	+----------------------------------+
+
+	select count(compliment_cute = NULL) from user
+	+-------------------------------+
+	| count(compliment_cute = NULL) |
+	+-------------------------------+
+	|                             0 |
+	+-------------------------------+
+
+	select count(compliment_list = NULL) from user
+	+-------------------------------+
+	| count(compliment_list = NULL) |
+	+-------------------------------+
+	|                             0 |
+	+-------------------------------+
+
+	select count(compliment_note = NULL) from user
+	+-------------------------------+
+	| count(compliment_note = NULL) |
+	+-------------------------------+
+	|                             0 |
+	+-------------------------------+
+
+	select count(compliment_plain = NULL) from user
+	+--------------------------------+
+	| count(compliment_plain = NULL) |
+	+--------------------------------+
+	|                              0 |
+	+--------------------------------+
+
+	select count(compliment_cool = NULL) from user
+	+-------------------------------+
+	| count(compliment_cool = NULL) |
+	+-------------------------------+
+	|                             0 |
+	+-------------------------------+
+
+	select count(compliment_funny = NULL) from user
+	+--------------------------------+
+	| count(compliment_funny = NULL) |
+	+--------------------------------+
+	|                              0 |
+	+--------------------------------+
+
+	select count(compliment_writer = NULL) from user
+	+---------------------------------+
+	| count(compliment_writer = NULL) |
+	+---------------------------------+
+	|                               0 |
+	+---------------------------------+
+
+	select count(compliment_photos = NULL) from user
+	+---------------------------------+
+	| count(compliment_photos = NULL) |
+	+---------------------------------+
+	|                               0 |
+	+---------------------------------+
+
+
+4. For each table and column listed below, display the smallest (minimum), largest (maximum), and average (mean) value for the following fields:
+
+	i. Table: Review, Column: Stars
+	
+		min: 1		max: 5		avg: 3.7082
+	
+	select min(stars), max(stars), avg(stars) from review
+	+------------+------------+------------+
+	| min(stars) | max(stars) | avg(stars) |
+	+------------+------------+------------+
+	|          1 |          5 |     3.7082 |
+	+------------+------------+------------+
+	
+	ii. Table: Business, Column: Stars
+	
+		min: 1		max: 5		avg: 3.6549
+	
+	select min(stars), max(stars), avg(stars) from business
+	+------------+------------+------------+
+	| min(stars) | max(stars) | avg(stars) |
+	+------------+------------+------------+
+	|        1.0 |        5.0 |     3.6549 |
+	+------------+------------+------------+
+	
+	iii. Table: Tip, Column: Likes
+	
+		min: 0		max: 2		avg: 0.0144
+	
+	select min(likes), max(likes), avg(likes) from tip
+	+------------+------------+------------+
+	| min(likes) | max(likes) | avg(likes) |
+	+------------+------------+------------+
+	|          0 |          2 |     0.0144 |
+	+------------+------------+------------+
+	
+	iv. Table: Checkin, Column: Count
+	
+		min: 1		max: 53		avg: 1.9414
+		
+	select min(count), max(count), avg(count) from checkin
+	+------------+------------+------------+
+	| min(count) | max(count) | avg(count) |
+	+------------+------------+------------+
+	|          1 |         53 |     1.9414 |
+	+------------+------------+------------+
+	
+	v. Table: User, Column: Review_count
+	
+		min: 0		max: 2000	avg: 24.2995
+		
+	select min(review_count), max(review_count), avg(review_count) from user
+	+-------------------+-------------------+-------------------+
+	| min(review_count) | max(review_count) | avg(review_count) |
+	+-------------------+-------------------+-------------------+
+	|                 0 |              2000 |           24.2995 |
+	+-------------------+-------------------+-------------------+
+
+
+5. List the cities with the most reviews in descending order:
+
+	SQL code used to arrive at answer:
+	
+	select city, sum(review_count) as total_reviews
+	from business
+	group by city
+	order by total_reviews desc
+	
+	Copy and Paste the Result Below:
+	
+	+-----------------+---------------+
+	| city            | total_reviews |
+	+-----------------+---------------+
+	| Las Vegas       |         82854 |
+	| Phoenix         |         34503 |
+	| Toronto         |         24113 |
+	| Scottsdale      |         20614 |
+	| Charlotte       |         12523 |
+	| Henderson       |         10871 |
+	| Tempe           |         10504 |
+	| Pittsburgh      |          9798 |
+	| Montréal        |          9448 |
+	| Chandler        |          8112 |
+	| Mesa            |          6875 |
+	| Gilbert         |          6380 |
+	| Cleveland       |          5593 |
+	| Madison         |          5265 |
+	| Glendale        |          4406 |
+	| Mississauga     |          3814 |
+	| Edinburgh       |          2792 |
+	| Peoria          |          2624 |
+	| North Las Vegas |          2438 |
+	| Markham         |          2352 |
+	| Champaign       |          2029 |
+	| Stuttgart       |          1849 |
+	| Surprise        |          1520 |
+	| Lakewood        |          1465 |
+	| Goodyear        |          1155 |
+	+-----------------+---------------+
+	(Output limit exceeded, 25 of 362 total rows shown)
+
+
+6. Find the distribution of star ratings to the business in the following cities:
+
+i. Avon
+
+SQL code used to arrive at answer:
+
+select stars as [star rating], count(stars) as count
+from business
+where city = 'Avon'
+group by stars
+
+Copy and Paste the Resulting Table Below (2 columns – star rating and count):
+
++-------------+-------+
+| star rating | count |
++-------------+-------+
+|         1.5 |     1 |
+|         2.5 |     2 |
+|         3.5 |     3 |
+|         4.0 |     2 |
+|         4.5 |     1 |
+|         5.0 |     1 |
++-------------+-------+
+
+ii. Beachwood
+
+SQL code used to arrive at answer:
+
+select stars as [star rating], count(stars) as count
+from business
+where city = 'Beachwood'
+group by stars
+
+Copy and Paste the Resulting Table Below (2 columns – star rating and count):
+		
++-------------+-------+
+| star rating | count |
++-------------+-------+
+|         2.0 |     1 |
+|         2.5 |     1 |
+|         3.0 |     2 |
+|         3.5 |     2 |
+|         4.0 |     1 |
+|         4.5 |     2 |
+|         5.0 |     5 |
++-------------+-------+
+
+
+7. Find the top 3 users based on their total number of reviews:
+		
+	SQL code used to arrive at answer:
+	
+	select name, review_count
+	from user
+	order by review_count desc
+	limit 3
+		
+	Copy and Paste the Result Below:
+		
+	+--------+--------------+
+	| name   | review_count |
+	+--------+--------------+
+	| Gerald |         2000 |
+	| Sara   |         1629 |
+	| Yuri   |         1339 |
+	+--------+--------------+
+
+
+8. Does posing more reviews correlate with more fans?
+
+	select range as [fans range],
+	count(*) as [num of users],
+	round(avg(review_count), 2) as [avg num of reviews],
+	round(avg(fans), 2) as [avg num of fans]
+	from (select case when fans between 0 and 9 then '0 - 9'
+					  when fans between 10 and 99 then '10 - 99'
+					  else '100 +' end as range,
+		  review_count,
+		  fans
+		  from user)
+	group by [fans range]
+	+------------+--------------+--------------------+-----------------+
+	| fans range | num of users | avg num of reviews | avg num of fans |
+	+------------+--------------+--------------------+-----------------+
+	| 0 - 9      |         9690 |              15.01 |            0.45 |
+	| 10 - 99    |          294 |             283.33 |            25.6 |
+	| 100 +      |           16 |              891.5 |          189.75 |
+	+------------+--------------+--------------------+-----------------+
+
+	select range as [review range],
+	count(*) as [num of users],
+	round(avg(review_count), 2) as [avg num of reviews],
+	round(avg(fans), 2) as [avg num of fans]
+	from (select case when review_count between 0 and 9 then '0 - 9'
+					  when review_count between 10 and 99 then '10 - 99'
+					  else '100 +' end as range,
+		  review_count,
+		  fans
+		  from user)
+	group by [review range]
+	+--------------+--------------+--------------------+-----------------+
+	| review range | num of users | avg num of reviews | avg num of fans |
+	+--------------+--------------+--------------------+-----------------+
+	| 0 - 9        |         6431 |               3.34 |            0.12 |
+	| 10 - 99      |         3054 |              28.77 |            1.09 |
+	| 100 +        |          515 |             259.56 |           20.98 |
+	+--------------+--------------+--------------------+-----------------+
+
+	We split the number of fans into three groups.
+	From the above results, we can see only 16 users with more than 100 fans.
+	Their average number of reviews is 891.5, much higher than the other two groups.
+	We also split the number of reviews into three groups.
+	From the above results, we can see 515 users post more than 100 reviews.
+	Their average number of fans is 20.98, which is also much higher than the other two groups.
+	So I think, yes, posting more reviews correlates with more fans.
+
+
+9. Are there more reviews with the word "love" or with the word "hate" in them?
+
+	Answer: There are more reviews with the word "love".
+	
+	SQL code used to arrive at answer:
+
+	select
+	(select count(text) from review
+		where text like '%love%') as love,
+	(select count(text) from review
+		where text like '%hate%') as hate
+	+------+------+
+	| love | hate |
+	+------+------+
+	| 1780 |  232 |
+	+------+------+
+
+
+10. Find the top 10 users with the most fans:
+
+	SQL code used to arrive at answer:
+	
+	select name, fans
+	from user
+	order by fans desc
+	limit 10
+	
+	Copy and Paste the Result Below:
+
+	+-----------+------+
+	| name      | fans |
+	+-----------+------+
+	| Amy       |  503 |
+	| Mimi      |  497 |
+	| Harald    |  311 |
+	| Gerald    |  253 |
+	| Christine |  173 |
+	| Lisa      |  159 |
+	| Cat       |  133 |
+	| William   |  126 |
+	| Fran      |  124 |
+	| Lissa     |  120 |
+	+-----------+------+
+
+
+Part 2: Inferences and Analysis
+
+1. Pick one city and category of your choice and group the businesses in that city or category by their overall star rating. Compare the businesses with 2-3 stars to the businesses with 4-5 stars.
+	
+Pick city 'Las Vegas' and category 'Restaurants'.
+
+i. Do the two groups you chose to analyze have a different distribution of hours?
+
+There is no significant difference in the distribution of hours between the two groups.
+But 'Jacques Cafe' in the '4-5 stars' group has slightly shorter opening hours.
+
+ii. Do the two groups you chose to analyze have a different number of reviews?
+
+The '4-5 stars' group has a higher number of reviews than the '2-3 stars' group.
+
+iii. Are you able to infer anything from the location data provided between these two groups? Explain.
+
+The '2-3 stars' group has no neighborhood.
+Based on the location (address and postal code), it seems that the restaurants in the '4-5 stars' group are not very close to each other.
+The above observations and inferences are only based on the city 'Las Vegas' and the category 'Restaurants'.
+
+SQL code used for analysis:
+
+select case when stars between 2 and 3 then '2-3 stars'
+            when stars between 4 and 5 then '4-5 stars'
+            end as rating,
+name, hours, review_count, neighborhood, address, postal_code
+from business inner join hours on id = hours.business_id
+inner join category on id = category.business_id
+where city = 'Las Vegas' and category = 'Restaurants'
+and (rating = '2-3 stars' or rating = '4-5 stars')
++-----------+---------------------+-----------------------+--------------+--------------+---------------------------------+-------------+
+| rating    | name                | hours                 | review_count | neighborhood | address                         | postal_code |
++-----------+---------------------+-----------------------+--------------+--------------+---------------------------------+-------------+
+| 2-3 stars | Wingstop            | Monday|11:00-0:00     |          123 |              | 5045 W Tropicana Ave            | 89103       |
+| 2-3 stars | Wingstop            | Tuesday|11:00-0:00    |          123 |              | 5045 W Tropicana Ave            | 89103       |
+| 2-3 stars | Wingstop            | Friday|11:00-0:00     |          123 |              | 5045 W Tropicana Ave            | 89103       |
+| 2-3 stars | Wingstop            | Wednesday|11:00-0:00  |          123 |              | 5045 W Tropicana Ave            | 89103       |
+| 2-3 stars | Wingstop            | Thursday|11:00-0:00   |          123 |              | 5045 W Tropicana Ave            | 89103       |
+| 2-3 stars | Wingstop            | Sunday|11:00-0:00     |          123 |              | 5045 W Tropicana Ave            | 89103       |
+| 2-3 stars | Wingstop            | Saturday|11:00-0:00   |          123 |              | 5045 W Tropicana Ave            | 89103       |
+| 4-5 stars | Big Wong Restaurant | Monday|10:00-23:00    |          768 | Chinatown    | 5040 Spring Mountain Rd         | 89146       |
+| 4-5 stars | Big Wong Restaurant | Tuesday|10:00-23:00   |          768 | Chinatown    | 5040 Spring Mountain Rd         | 89146       |
+| 4-5 stars | Big Wong Restaurant | Friday|10:00-23:00    |          768 | Chinatown    | 5040 Spring Mountain Rd         | 89146       |
+| 4-5 stars | Big Wong Restaurant | Wednesday|10:00-23:00 |          768 | Chinatown    | 5040 Spring Mountain Rd         | 89146       |
+| 4-5 stars | Big Wong Restaurant | Thursday|10:00-23:00  |          768 | Chinatown    | 5040 Spring Mountain Rd         | 89146       |
+| 4-5 stars | Big Wong Restaurant | Sunday|10:00-23:00    |          768 | Chinatown    | 5040 Spring Mountain Rd         | 89146       |
+| 4-5 stars | Big Wong Restaurant | Saturday|10:00-23:00  |          768 | Chinatown    | 5040 Spring Mountain Rd         | 89146       |
+| 4-5 stars | Jacques Cafe        | Monday|11:00-20:00    |          168 | Summerlin    | 1910 Village Center Cir, Unit 1 | 89134       |
+| 4-5 stars | Jacques Cafe        | Tuesday|11:00-20:00   |          168 | Summerlin    | 1910 Village Center Cir, Unit 1 | 89134       |
+| 4-5 stars | Jacques Cafe        | Friday|11:00-20:00    |          168 | Summerlin    | 1910 Village Center Cir, Unit 1 | 89134       |
+| 4-5 stars | Jacques Cafe        | Wednesday|11:00-20:00 |          168 | Summerlin    | 1910 Village Center Cir, Unit 1 | 89134       |
+| 4-5 stars | Jacques Cafe        | Thursday|11:00-20:00  |          168 | Summerlin    | 1910 Village Center Cir, Unit 1 | 89134       |
+| 4-5 stars | Jacques Cafe        | Sunday|8:00-14:00     |          168 | Summerlin    | 1910 Village Center Cir, Unit 1 | 89134       |
+| 4-5 stars | Jacques Cafe        | Saturday|11:00-20:00  |          168 | Summerlin    | 1910 Village Center Cir, Unit 1 | 89134       |
++-----------+---------------------+-----------------------+--------------+--------------+---------------------------------+-------------+
+
+
+2. Group business based on the ones that are open and the ones that are closed. What differences can you find between the ones that are still open and the ones that are closed?.
+
+i. Difference 1:
+
+The number of open businesses is significantly more than closed ones.
+
+ii. Difference 2:
+
+The star rating of open businesses is higher than closed ones.
+
+SQL code used for analysis:
+
+select is_open,
+count(distinct id) as [num of business],
+round(avg(stars), 2) as [avg stars]
+from business
+group by is_open
++---------+-----------------+-----------+
+| is_open | num of business | avg stars |
++---------+-----------------+-----------+
+|       0 |            1520 |      3.52 |
+|       1 |            8480 |      3.68 |
++---------+-----------------+-----------+
+
+
+3. For this last part of your analysis, you are going to choose the type of analysis you want to conduct on the Yelp dataset and are going to prepare the data for analysis.
+
+Parsing out keywords and business attributes for sentiment analysis, clustering businesses to find commonalities or anomalies between them, predicting the overall star rating for a business, predicting the number of fans a user will have, and so on.
+	
+i. Indicate the type of analysis you chose to do:
+
+The most satisfactory business category.
+
+ii. The type of data you will need for your analysis and why you chose that data:
+
+Two tables, 'business' and 'category', will be used to analyse the most satisfactory business category.
+In the 'business' table, the primary key (id) will be used to count the number of different businesses.
+Star ratings with too few businesses may cause bias. We will select the number of businesses that are greater than 5.
+(starts) will provide rating information. The higher the star rating means the more satisfied.
+(review_count) will be used to count the number of reviews.
+Star ratings with too few reviews may cause bias.
+We will select the total number of reviews that are greater than or equal to 100.
+In the 'category' table, the foreign key (business_id) is used to connect to the 'business' table,
+(category) will provide category information for all businesses.
+
+iii. Output of your finished dataset:
+
++---------------------------+-----------+--------------------+-------------------+
+| category                  | avg stars | total review count | num of businesses |
++---------------------------+-----------+--------------------+-------------------+
+| Automotive                |       4.5 |                198 |                 9 |
+| Local Services            |      4.21 |                100 |                12 |
+| Active Life               |      4.15 |                131 |                10 |
+| Health & Medical          |      4.09 |                203 |                17 |
+| Arts & Entertainment      |       4.0 |                388 |                 7 |
+| Shopping                  |      3.98 |                977 |                30 |
+| Sandwiches                |      3.94 |                974 |                 8 |
+| Beauty & Spas             |      3.88 |                119 |                13 |
+| American (Traditional)    |      3.82 |               1128 |                11 |
+| Food                      |      3.78 |               1781 |                23 |
+| Event Planning & Services |      3.75 |                118 |                 6 |
+| Bars                      |       3.5 |               1322 |                17 |
+| Mexican                   |       3.5 |                327 |                 7 |
+| Nightlife                 |      3.48 |               1351 |                20 |
+| Restaurants               |      3.46 |               4504 |                71 |
+| American (New)            |      3.33 |                481 |                 6 |
+| Hotels & Travel           |      3.22 |                381 |                 9 |
+| Fast Food                 |      3.21 |                185 |                 7 |
+| Burgers                   |      3.13 |                297 |                 8 |
++---------------------------+-----------+--------------------+-------------------+
+
+As can be seen from the above output, 'Automotive' is the most satisfactory business category, with an average star rating of 4.5.
+Followed by 'Local Services' with an average star rating of 4.21.
+There are 5 businesses with an average star rating greater than or equal to 4.0.
+
+iv. The SQL code you used to create your final dataset:
+
+select
+category,
+round(avg(stars), 2) as [avg stars],
+sum(review_count) as [total review count],
+count(id) as [num of businesses]
+from business inner join category on id = business_id
+group by category
+having [num of businesses] > 5 and [total review count] >= 100
+order by [avg stars] desc
+
